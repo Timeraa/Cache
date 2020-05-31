@@ -1,0 +1,12 @@
+{
+	"compilerOptions": {
+		"module": "commonjs",
+		"moduleResolution": "node",
+		"target": "ESNEXT",
+		"inlineSourceMap": true,
+		"esModuleInterop": true,
+		"removeComments": true,
+		"outDir": "bin",
+		"baseUrl": "."
+	}
+}
