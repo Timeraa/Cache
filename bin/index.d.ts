@@ -1,7 +1,18 @@
 interface CacheManagerOptions {
     memoryOnly?: boolean;
     checkInterval?: number;
-    cacheDirectory: string;
+    defaultExpire?: number;
+    cacheDirectory?: string;
+    discardTamperedCache?: boolean;
+}
+interface CacheListenerOptions {
+    only?: string | Array<string>;
+}
+interface CacheEntry {
+    data: {
+        [x: string]: any;
+    };
+    expires: number;
 }
 export default class CacheManager {
     private internalCache;
@@ -10,12 +21,16 @@ export default class CacheManager {
     cacheDirectory: string;
     defaultExpire: number;
     checkInterval: number;
+    discardTamperedCache: boolean;
     constructor(options?: CacheManagerOptions);
     set(name: string, data: any, expires?: number): void;
-    get(name: string): any;
+    get(name: string): {
+        [x: string]: any;
+    };
     isExpired(name: string): boolean;
-    keys(): any;
-    values(): any;
-    on(event: "update" | "outdated", callback: Function): void;
+    keys(): string[];
+    values(): CacheEntry[];
+    entires(): [string, CacheEntry][];
+    on(event: "update" | "outdated", callback: (name: string, data?: any) => void, options?: CacheListenerOptions): void;
 }
 export {};
