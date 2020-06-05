@@ -28,7 +28,6 @@ export default class CacheManager {
 	 * The time in miliseconds for when a new cache without an assigned expire date is counted as outdated, if it's outdated it will fire an outdated event
 	 */
 	defaultExpire = 5 * 60 * 1000;
-
 	/**
 	 * Expire check interval
 	 */
@@ -111,7 +110,7 @@ export default class CacheManager {
 		return this.internalCache[name];
 	}
 
-	hasExpired(name: string) {
+	isExpired(name: string) {
 		return Date.now() > this.internalCache[name].expires;
 	}
 
