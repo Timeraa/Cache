@@ -3,6 +3,7 @@
 		"module": "commonjs",
 		"moduleResolution": "node",
 		"target": "ESNEXT",
+		"declaration": true,
 		"inlineSourceMap": true,
 		"esModuleInterop": true,
 		"removeComments": true,

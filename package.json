@@ -1,8 +1,11 @@
 {
 	"name": "cache",
 	"version": "1.0.0",
-	"description": "A simple cache.",
+	"description": "A simple and powerful cache.",
 	"main": "bin/index.js",
+	"scripts": {
+		"build": "tsc && tsc --emitDeclarationOnly"
+	},
 	"repository": "https://github.com/Timeraa/Cache.git",
 	"author": "Timeraa",
 	"license": "MPL-2.0",
