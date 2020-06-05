@@ -2,9 +2,9 @@
 
 **Simple** yet **powerful** cache used by [PreMiD](https://premid.app).
 
-## Why
+## Why?
 
-Caching is one of the most important things to do in production use to prevent your databases from getting bombarded with requests or to cache results from an API which only allows a certain amount of requests.
+Caching is one of the most **important** things to do in production; futhermore, preventing your databases from getting bombarded with requests or to cache results from an API which only allows a certain amount of requests.
 
 ## Installation
 
@@ -26,13 +26,13 @@ A CacheManager is the main entry to access, set and listen to events from the ca
   cacheManager = new CacheManager(options?);
 ```
 
-The CacheManager has a set of options that can be changes:
+The CacheManager has a set of options that can be changed:
 
 | Option          | Type      | Default Value          | Description                                                                                                              |
 | --------------- | --------- | ---------------------- | ------------------------------------------------------------------------------------------------------------------------ |
-| memoryOnly?     | `boolean` | true                   | Wherether or not the cache is stored in memory (RAM) only or should be saved to a file as well as an redundancy measure. |
+| memoryOnly?     | `boolean` | true                   | Whether or not the cache is stored in memory (RAM) only or should be saved to a file as well as an redundancy measure. |
 | cacheDirectory? | `string`  | \_\_dirname + .cache   | Allows to change the default cache folder that's used to load and save the cache.                                        |
-| defaultExpire?  | `number`  | 300000 (5 minutes)     | Changes the default time in miliseconds when a cache is considered outdated.                                             |
+| defaultExpire?  | `number`  | 300000 (5 minutes)     | Changes the default time in miliseconds when cache is considered outdated.                                             |
 | checkInterval?  | `number`  | 250 (4 times a second) | Changes the default checkInterval to check for outdated caches.                                                          |
 
 ### Listening to cache events
