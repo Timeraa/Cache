@@ -1,4 +1,4 @@
-import { existsSync, mkdirSync, readdirSync, readFileSync, rmdirSync, unlinkSync, writeFileSync } from "fs";
+import { existsSync, mkdirSync, readdirSync, readFileSync, rmdir, unlink, writeFileSync } from "fs";
 import { join, resolve } from "path";
 
 interface CacheManagerOptions {
@@ -129,9 +129,9 @@ export default class CacheManager {
 					};
 				} catch (err) {
 					if (this.discardTamperedCache) {
-						unlinkSync(join(this.cacheDirectory, cTR, "data"));
-						unlinkSync(join(this.cacheDirectory, cTR, "expires"));
-						rmdirSync(join(this.cacheDirectory, cTR));
+						unlink(join(this.cacheDirectory, cTR, "data"), () => {});
+						unlink(join(this.cacheDirectory, cTR, "expires"), () => {});
+						rmdir(join(this.cacheDirectory, cTR), () => {});
 					}
 				}
 			});
