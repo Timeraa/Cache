@@ -33,13 +33,13 @@ A CacheManager is the main entry to access, set and listen to events from the ca
 
 The CacheManager has a set of options that can be changed:
 
-| Option               | Type      | Default Value          | Description                                                                                                            |
-| -------------------- | --------- | ---------------------- | ---------------------------------------------------------------------------------------------------------------------- |
-| memoryOnly?          | `boolean` | true                   | Whether or not the cache is stored in memory (RAM) only or should be saved to a file as well as an redundancy measure. |
-| cacheDirectory?      | `string`  | \_\_dirname + .cache   | Allows to change the default cache folder that's used to load and save the cache.                                      |
-| defaultExpire?       | `number`  | 300000 (5 minutes)     | Changes the default time in miliseconds when cache is considered outdated.                                             |
-| checkInterval?       | `number`  | 250 (4 times a second) | Changes the default checkInterval to check for outdated caches.                                                        |
-| discardTamperedCache | `boolean` | false                  | Wether or not to delete corrupted cache on startup                                                                     |
+| Option               | Type      | Default Value          | Description                                                                                                           |
+| -------------------- | --------- | ---------------------- | --------------------------------------------------------------------------------------------------------------------- |
+| memoryOnly?          | `boolean` | true                   | Wether or not the cache is stored in memory (RAM) only or should be saved to a file as well as an redundancy measure. |
+| cacheDirectory?      | `string`  | \_\_dirname + .cache   | Allows to change the default cache folder that's used to load and save the cache.                                     |
+| defaultExpire?       | `number`  | 300000 (5 minutes)     | Changes the default time in miliseconds when cache is considered outdated.                                            |
+| checkInterval?       | `number`  | 250 (4 times a second) | Changes the default checkInterval to check for outdated caches.                                                       |
+| discardTamperedCache | `boolean` | false                  | Wether or not to delete corrupted cache on startup                                                                    |
 
 ### Listening to events
 
