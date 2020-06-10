@@ -1,4 +1,4 @@
-# Cache
+# Fast Node Cache
 
 **Simple** yet **powerful** cache used by [PreMiD](https://premid.app).
 
@@ -15,10 +15,10 @@ Caching is one of the most **important** things to do in production; futhermore,
 
 ```bash
 # npm
-$ npm i Timeraa/Cache
+$ npm i fast-node-cache
 
 # yarn
-$ yarn add Timeraa/Cache
+$ yarn add fast-node-cache
 ```
 
 ## Usage
