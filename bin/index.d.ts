@@ -15,7 +15,9 @@ interface CacheEntry {
     expires: number;
 }
 export default class CacheManager {
-    private internalCache;
+    internalCache: {
+        [x: string]: CacheEntry;
+    };
     private listeners;
     memoryOnly: boolean;
     cacheDirectory: string;

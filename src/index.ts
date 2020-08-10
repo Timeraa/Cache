@@ -1,4 +1,12 @@
-import { existsSync, mkdirSync, readdirSync, readFileSync, rmdir, unlink, writeFileSync } from "fs";
+import {
+	existsSync,
+	mkdirSync,
+	readdirSync,
+	readFileSync,
+	rmdir,
+	unlink,
+	writeFileSync
+} from "fs";
 import { join, resolve } from "path";
 
 interface CacheManagerOptions {
@@ -38,7 +46,7 @@ interface CacheEntry {
 }
 
 export default class CacheManager {
-	private internalCache: { [x: string]: CacheEntry } = {};
+	internalCache: { [x: string]: CacheEntry } = {};
 	private listeners: Array<{
 		event: string;
 		callback: Function;
@@ -119,7 +127,7 @@ export default class CacheManager {
 				try {
 					let data: CacheEntry = JSON.parse(
 						readFileSync(join(this.cacheDirectory, cTR, "data"), "utf-8")
-					);
+					).data;
 
 					this.internalCache[cTR] = {
 						data,
@@ -145,13 +153,10 @@ export default class CacheManager {
 	 * @param expires expire time of cache in miliseconds
 	 */
 	set(name: string, data: any, expires: number = this.defaultExpire) {
-		if (!this.internalCache[name]) this.internalCache[name] = { data, expires };
-		else {
-			this.internalCache[name] = {
-				data,
-				expires: Date.now() + expires
-			};
-		}
+		this.internalCache[name] = {
+			data,
+			expires: Date.now() + expires
+		};
 
 		this.listeners
 			.filter(
@@ -174,11 +179,11 @@ export default class CacheManager {
 
 		writeFileSync(
 			join(this.cacheDirectory, name, "data"),
-			JSON.stringify({ data: data })
+			JSON.stringify({ data })
 		);
 		writeFileSync(
 			join(this.cacheDirectory, name, "expires"),
-			expires.toString()
+			(Date.now() + expires).toString()
 		);
 	}
 
