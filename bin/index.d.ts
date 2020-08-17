@@ -33,6 +33,6 @@ export default class CacheManager {
     keys(): string[];
     values(): CacheEntry[];
     entires(): [string, CacheEntry][];
-    on(event: "update" | "outdated", callback: (name: string, data?: any) => void, options?: CacheListenerOptions): void;
+    on(event: "update" | "outdated" | "diskCacheUpdate", callback: (name: string, data?: any) => void, options?: CacheListenerOptions): void;
 }
 export {};

@@ -1,13 +1,7 @@
-import {
-	existsSync,
-	mkdirSync,
-	readdirSync,
-	readFileSync,
-	rmdir,
-	unlink,
-	writeFileSync
-} from "fs";
-import { join, resolve } from "path";
+import { watch } from "chokidar";
+import { existsSync, mkdirSync, readdirSync, readFileSync, rmdir, unlink } from "fs";
+import { readdir, readFile, writeFile } from "fs/promises";
+import { basename, dirname, join, resolve } from "path";
 
 interface CacheManagerOptions {
 	/**
@@ -93,6 +87,45 @@ export default class CacheManager {
 		if (options?.discardTamperedCache)
 			this.discardTamperedCache = options.discardTamperedCache;
 
+		const watcher = watch(this.cacheDirectory, {
+			ignoreInitial: true,
+			awaitWriteFinish: true,
+			ignorePermissionErrors: true,
+			cwd: this.cacheDirectory
+		});
+
+		watcher.on("all", async (e, path) => {
+			const cacheName = basename(dirname(path)).replace(".", "");
+
+			if (cacheName.length === 0) return;
+
+			this.internalCache[cacheName] = {
+				data: JSON.parse(
+					await readFile(join(this.cacheDirectory, cacheName, "data"), "utf-8")
+				).data,
+				expires: Number(
+					await readFile(
+						join(this.cacheDirectory, cacheName, "expires"),
+						"utf-8"
+					)
+				)
+			};
+
+			this.listeners
+				.filter(
+					l =>
+						l.event === "diskCacheUpdate" &&
+						(l.options?.only
+							? Array.isArray(l.options.only)
+								? l.options.only.find(o => o === name)
+								: l.options.only === name
+							: true)
+				)
+				.forEach(l =>
+					l.callback(cacheName, this.internalCache[cacheName].data)
+				);
+		});
+
 		setInterval(() => {
 			for (let i = 0; this.keys().length > i; i++) {
 				if (Date.now() > this.values()[i].expires)
@@ -177,11 +210,11 @@ export default class CacheManager {
 		if (!existsSync(join(this.cacheDirectory, name)))
 			mkdirSync(join(this.cacheDirectory, name));
 
-		writeFileSync(
+		writeFile(
 			join(this.cacheDirectory, name, "data"),
 			JSON.stringify({ data })
 		);
-		writeFileSync(
+		writeFile(
 			join(this.cacheDirectory, name, "expires"),
 			(Date.now() + expires).toString()
 		);
@@ -233,7 +266,7 @@ export default class CacheManager {
 	 * @param options options
 	 */
 	on(
-		event: "update" | "outdated",
+		event: "update" | "outdated" | "diskCacheUpdate",
 		callback: (name: string, data?: any) => void,
 		options?: CacheListenerOptions
 	) {
